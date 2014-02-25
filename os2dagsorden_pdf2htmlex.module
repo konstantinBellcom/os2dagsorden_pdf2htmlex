@@ -317,7 +317,7 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
 
     //check if already convered
     if(!file_exists($path)){
-	shell_exec(variable_get('os2dagsorden_pdf2htmlex_path') . ' ' . escapeshellarg($file_path_real) . '  --dest-dir ' . escapeshellarg($dest_dir_real) . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM);
+	drupal_set_message("shell = ". shell_exec(variable_get('os2dagsorden_pdf2htmlex_path') . ' ' . escapeshellarg($file_path_real) . '  --dest-dir ' . escapeshellarg($dest_dir_real) . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM));
 
         //successful conversion?
       //todo:delete
