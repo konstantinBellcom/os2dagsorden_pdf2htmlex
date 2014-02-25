@@ -313,6 +313,7 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   //todo: delete
   drupal_set_message("file_path_real = $file_path_real");
   drupal_set_message("escapeshellarg(file_path_real) = " . escapeshellarg($file_path_real));
+  drupal_set_message("'" . str_replace("'", "\'", $file_path_real) . "'");
 
 
   if (isset($file)){
