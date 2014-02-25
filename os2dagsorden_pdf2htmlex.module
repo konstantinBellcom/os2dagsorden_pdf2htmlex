@@ -23,14 +23,15 @@ function os2dagsorden_pdf2htmlex_menu() {
 	'access arguments' => array('administer os2web'),
 	'type' => MENU_CALLBACK,
     );
-//admin/reports/
+
   $items['admin/reports/pdf2htmlex'] = array(
     'title' => 'PDF to HTML',
     'description' => t("PDF to HTML convertion files and statuses."),
     'page callback' => 'os2dagsorden_pdf2htmlex_report',
     'access arguments' => array('administer content'),
   );
-    return $items;
+
+  return $items;
 }
 
 function os2dagsorden_pdf2htmlex_report(){
@@ -70,6 +71,8 @@ function os2dagsorden_pdf2htmlex_report(){
     $rows = array();
 
     foreach ($result as $row) {
+      global $base_path;
+      $row->did = '<a href="' . $base_path . 'node/' . $row->did . '">' . $row->did .'</a>';
       if($row->progress == "") $row->progress = "Scheduled";
       $r =(array)$row;
       //action
@@ -306,9 +309,18 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   } else {
     $dest_dir_real = $file_pathinfo['dirname'];
   }
-  
+
+  //todo: delete
+  drupal_set_message("file_path_real = $file_path_real");
+  //todo: delete
+  drupal_set_message("file_pathinfo = $file_pathinfo");
+
   if (isset($file)){
     $path = $dest_dir_real . '/' . $file_pathinfo['filename'] . '.html';//filename.html
+
+    
+    //todo: delete
+    drupal_set_message("path = $path");
 
     $success = FALSE;
 
@@ -329,7 +341,7 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
 	}  else {
 	    db_update('os2dagsorden_pdf2htmlex_files')
 	    ->fields(array(
-	      'progress' => 'file_not_converted',
+	      'progress' => 'Not converted',
 	    ))
 	    ->condition('fid', $fid)
 	    ->condition('did', $did)
@@ -353,7 +365,7 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   } else {
     db_update('os2dagsorden_pdf2htmlex_files')
       ->fields(array(
-	'progress' => 'file_not_found',
+	'progress' => 'Not found',
       ))
       ->condition('fid', $fid)
       ->condition('did', $did)
