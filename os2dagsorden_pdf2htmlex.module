@@ -117,7 +117,6 @@ function os2dagsorden_pdf2htmlex_do_convert(){
  * @param int $fid file id
  * @param int $did node id
  *
- * @return none
  */
 function os2dagsorden_pdf2htmlex_schedule($fid, $did) {
   db_insert('os2dagsorden_pdf2htmlex_files')
@@ -310,11 +309,6 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
     $dest_dir_real = $file_pathinfo['dirname'];
   }
 
-  //todo: delete
-  drupal_set_message("file_path_real = $file_path_real");
-//  drupal_set_message("'" . str_replace("'", "\'", $file_path_real) . "'");
-
-
   if (isset($file)){
     $path = $dest_dir_real . '/' . $file_pathinfo['filename'] . '.html';//filename.html
 
@@ -323,13 +317,11 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
     //check if already convered
     if(!file_exists($path)){
       $shell_file_path_real = "'" . str_replace("'", "\'", $file_path_real) . "'";
-	  //drupal_set_message("shell = ". shell_exec(variable_get('os2dagsorden_pdf2htmlex_path') . ' ' . escapeshellarg($file_path_real) . '  --dest-dir ' . escapeshellarg($dest_dir_real) . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM . ' 2>&1'));
-	  drupal_set_message("shell = ". shell_exec(variable_get('os2dagsorden_pdf2htmlex_path') . ' ' . $shell_file_path_real . '  --dest-dir ' . escapeshellarg($dest_dir_real) . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM . ' 2>&1'));
+      $shell_dest_dir_real = "'" . str_replace("'", "\'", $dest_dir_real) . "'";
+
+	  shell_exec(variable_get('os2dagsorden_pdf2htmlex_path') . ' ' . $shell_file_path_real . '  --dest-dir ' . $shell_dest_dir_real . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM . ' 2>&1');
 
         //successful conversion?
-      //todo:delete
-      drupal_set_message("file_exists(path) = " . file_exists($path));
-
 	if (file_exists($path)) {
 	    $data = file_get_contents($path);
 
