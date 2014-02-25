@@ -310,17 +310,8 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
     $dest_dir_real = $file_pathinfo['dirname'];
   }
 
-  //todo: delete
-  drupal_set_message("file_path_real = $file_path_real");
-  //todo: delete
-  drupal_set_message("file_pathinfo = $file_pathinfo");
-
   if (isset($file)){
     $path = $dest_dir_real . '/' . $file_pathinfo['filename'] . '.html';//filename.html
-
-    
-    //todo: delete
-    drupal_set_message("path = $path");
 
     $success = FALSE;
 
@@ -329,6 +320,9 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
 	shell_exec(variable_get('os2dagsorden_pdf2htmlex_path') . ' ' . escapeshellarg($file_path_real) . '  --dest-dir ' . escapeshellarg($dest_dir_real) . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM);
 
         //successful conversion?
+      //todo:delete
+      drupal_set_message("file_exists(path) = " . file_exists($path));
+
 	if (file_exists($path)) {
 	    $data = file_get_contents($path);
 
